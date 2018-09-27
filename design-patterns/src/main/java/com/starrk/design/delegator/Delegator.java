@@ -34,16 +34,16 @@ public class Delegator implements InvocationHandler {
     }
 
     // 动态代理类生成器
-    public static class DynamicDelegator {
+    public static class DynamicDelegator<E> {
 
-        public Object getProxy(Object instance, InvocationHandler delegator) {
+        public E getProxy(Object instance, InvocationHandler delegator) {
 
             // 获取被代理类的ClassLoader
             ClassLoader classLoader = instance.getClass().getClassLoader();
 
             // 动态产生一个代理者
             Class<?>[] cls = new Class[]{Map.class};
-            return Proxy.newProxyInstance(classLoader, cls, delegator);
+            return (E) Proxy.newProxyInstance(classLoader, cls, delegator);
         }
     }
 
@@ -54,10 +54,10 @@ public class Delegator implements InvocationHandler {
 
         // 创建代理处理对象实例
         InvocationHandler delegator = new Delegator(map);
-        DynamicDelegator dynamicDelegator = new DynamicDelegator();
+        DynamicDelegator<Map<String,String>> dynamicDelegator = new DynamicDelegator();
 
         // 动态获取代理对象
-        Map<String, String> proxyMap = (Map<String, String>) dynamicDelegator.getProxy(map, delegator);
+        Map<String, String> proxyMap = dynamicDelegator.getProxy(map, delegator);
 
 //        // 获取被代理类的ClassLoader
 //        ClassLoader classLoader = map.getClass().getClassLoader();
