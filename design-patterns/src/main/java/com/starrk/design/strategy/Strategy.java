@@ -1,12 +1,15 @@
 package com.starrk.design.strategy;
 
+
 public class Strategy {
 
     public interface Travel{
         void travelType();
     }
 
-    // 环境类，持有一个策略的引用
+    /**
+     *  策略持有类，持有一个策略的引用不必实现策略接口，区别于代理模式（代理类必须实现被代理类接口）
+    */
     public static class TravelContext{
 
         private Travel travel;
